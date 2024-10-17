@@ -14,22 +14,41 @@ datasource db {
 }
 
 model User {
-  id              String   @id @default(uuid())
+  id              String      @id @default(uuid())
   name            String
   email           String
   password_hashed String
-  created_at      DateTime @default(now())
+  created_at      DateTime    @default(now())
+  Operation       Operation[]
 
   @@map("users")
 }
 
+enum TypeOperation {
+  deposit
+  credit
+  debit
+}
+
 model Operation {
-  id       String  @id @default(uuid())
-  name     String
-  category String
-  price    Decimal
+  id    String        @id @default(uuid())
+  name  String
+  price Decimal
+  type  TypeOperation @default(deposit)
+
+  category    Category @relation(fields: [category_id], references: [id])
+  category_id String
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  @@map("operations")
 }
 
 model Category {
-  id String @id @default(uuid())
+  id        String      @id @default(uuid())
+  name      String
+  Operation Operation[]
+
+  @@map("categories")
 }
