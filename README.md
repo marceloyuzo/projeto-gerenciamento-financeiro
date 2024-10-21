@@ -15,8 +15,8 @@ Aprendizado: Manipulação de dados financeiros, geração de relatórios, auten
 [] - 
 
 ## REQUISITOS FUNCIONAIS
-[] - O usuário deve ser capaz de se registrar no sistema;
-[] - O usuário deve ser capaz de se autenticar;
+[x] - O usuário deve ser capaz de se registrar no sistema;
+[x] - O usuário deve ser capaz de se autenticar;
 [] - O usuário deve ser capaz de registrar as suas operações, informando:
     [] - Nome da despesa/receita;
     [] - Categoria;
