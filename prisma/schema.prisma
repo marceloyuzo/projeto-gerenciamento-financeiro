@@ -25,30 +25,31 @@ model User {
 }
 
 enum TypeOperation {
-  deposit
-  credit
-  debit
+  Deposit
+  Credit
+  Debit
+}
+
+enum TypeCategory {
+  Housing
+  Food
+  Transport
+  Health
+  Education
+  Leisure
+  Investment
 }
 
 model Operation {
-  id    String        @id @default(uuid())
-  name  String
-  price Decimal
-  type  TypeOperation @default(deposit)
-
-  category    Category @relation(fields: [category_id], references: [id])
-  category_id String
+  id       String        @id @default(uuid())
+  name     String
+  price    Int
+  date     DateTime      @default(now())
+  type     TypeOperation @default(Deposit)
+  category TypeCategory
 
   user    User   @relation(fields: [user_id], references: [id])
   user_id String
 
   @@map("operations")
-}
-
-model Category {
-  id        String      @id @default(uuid())
-  name      String
-  Operation Operation[]
-
-  @@map("categories")
 }
