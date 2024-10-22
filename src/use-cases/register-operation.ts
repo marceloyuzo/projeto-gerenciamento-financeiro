@@ -5,9 +5,9 @@ import { z } from 'zod'
 interface RegisterOperationRequest {
   userId: string
   name: string
-  category: TypeCategory
+  category: string
   price: number
-  type: TypeOperation
+  type: string
   date: Date
 }
 
@@ -18,9 +18,17 @@ interface RegisterOperationResponse {
 const registerOperationSchema = z.object({
   userId: z.string(),
   name: z.string(),
-  category: z.nativeEnum(TypeCategory), // Validação usando o enum
+  category: z.enum([
+    'Housing',
+    'Food',
+    'Transport',
+    'Health',
+    'Education',
+    'Leisure',
+    'Investment',
+  ]),
   price: z.number(),
-  type: z.string(),
+  type: z.enum(['Deposit', 'Credit', 'Debit']),
   date: z.date(),
 })
 

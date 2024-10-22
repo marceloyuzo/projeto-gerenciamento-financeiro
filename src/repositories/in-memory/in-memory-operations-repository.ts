@@ -8,7 +8,7 @@ export class InMemoryOperationsRepository implements OperationsRepository {
 
   async create(data: Prisma.OperationUncheckedCreateInput) {
     const RequestSchema = z.object({
-      userId: z.string(),
+      user_id: z.string(),
       name: z.string(),
       category: z.enum([
         'Housing',
@@ -24,7 +24,7 @@ export class InMemoryOperationsRepository implements OperationsRepository {
       date: z.coerce.date(),
     })
 
-    const { name, category, type, price, date, userId } =
+    const { name, category, type, price, date, user_id } =
       RequestSchema.parse(data)
 
     const operation: Operation = {
@@ -34,10 +34,30 @@ export class InMemoryOperationsRepository implements OperationsRepository {
       category,
       price,
       type,
-      user_id: userId,
+      user_id,
     }
 
     this.items.push(operation)
+
+    return operation
+  }
+
+  async delete(operationId: string) {
+    const indexToBeDeleted = this.items.findIndex(
+      (item) => item.id === operationId,
+    )
+
+    if (indexToBeDeleted !== -1) {
+      this.items.splice(indexToBeDeleted, 1)
+    }
+  }
+
+  async findById(operationId: string) {
+    const operation = await this.items.find((item) => item.id === operationId)
+
+    if (!operation) {
+      return null
+    }
 
     return operation
   }

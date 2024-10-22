@@ -1,5 +1,4 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { compare } from 'bcryptjs'
 import { InMemoryOperationsRepository } from '../repositories/in-memory/in-memory-operations-repository'
 import { RegisterOperationUseCase } from './register-operation'
 
@@ -12,7 +11,7 @@ describe('Register Operation Use Case', () => {
     sut = new RegisterOperationUseCase(operationsRepository)
   })
 
-  it('should be able to register', async () => {
+  it('should be able to register a operation', async () => {
     const { operation } = await sut.execute({
       name: 'Ice cream',
       category: 'Food',
@@ -27,5 +26,18 @@ describe('Register Operation Use Case', () => {
     }
 
     expect(operation.id).toEqual(expect.any(String))
+  })
+
+  it('shoudnt be able to register a operation with wrong category', async () => {
+    expect(async () => {
+      await sut.execute({
+        name: 'Ice cream',
+        category: 'Random',
+        type: 'Debit',
+        price: 500,
+        date: new Date(),
+        userId: 'user-01',
+      })
+    }).rejects.toBeInstanceOf(Error)
   })
 })
