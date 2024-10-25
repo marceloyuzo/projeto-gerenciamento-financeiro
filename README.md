@@ -22,14 +22,17 @@ Aprendizado: Manipulação de dados financeiros, geração de relatórios, auten
     [x] - Valor;
     [x] - Tipo de operação (despesa/receita);
     [x] - Data da operação (por padrão é colocado na hora da criação);
+[x] - O usuário deve ser capaz de ver o seu histórico de operaçoes;
+<!-- 
 [] - O usuário deve ser capaz de criar novas categorias personalizadas de acordo com sua necessidade;
-[] - O usuário deve ser capaz de editar/remover categorias que ele criou;
-[] - O usuário deve ser capaz de gerar relatórios de saldo mensal/anual;
-[] - O usuário deve ser capaz de visualizar as suas métricas:
-    [] - Saldo;
-    [] - Despesas categorizadas;
-    [] - Receitas categorizadas;
-[] - O usuário deve ser capaz de editar/remover as suas operações;
+[] - O usuário deve ser capaz de editar/remover categorias que ele criou; 
+-->
+[] - O usuário deve ser capaz de gerar relatórios de gastos mensais ou por periodo;
+[x] - O usuário deve ser capaz de visualizar as suas métricas mensal/anual:
+    [x] - Saldo;
+    [x] - Despesas categorizadas;
+    [x] - Receitas categorizadas;
+[x] - O usuário deve ser capaz de editar/remover as suas operações;
 
 
 ## REQUISITOS NÃO FUNCIONAIS

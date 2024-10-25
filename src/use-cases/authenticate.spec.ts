@@ -13,12 +13,10 @@ describe('Authenticate Use Case', () => {
   })
 
   it('should be able to authenticate', async () => {
-    usersRepository.items.push({
-      id: 'id-01',
+    await usersRepository.create({
       name: 'Marcelo Yuzo',
       email: 'marceloyuzo@hotmail.com',
       password_hashed: await hash('123456', 6),
-      created_at: new Date(),
     })
 
     const { user } = await sut.execute({
@@ -34,12 +32,10 @@ describe('Authenticate Use Case', () => {
   })
 
   it('shouldnt be able to authenticate with wrong password', async () => {
-    usersRepository.items.push({
-      id: 'id-01',
+    await usersRepository.create({
       name: 'Marcelo Yuzo',
       email: 'marceloyuzo@hotmail.com',
       password_hashed: await hash('123456', 6),
-      created_at: new Date(),
     })
 
     expect(async () => {
@@ -51,12 +47,10 @@ describe('Authenticate Use Case', () => {
   })
 
   it('shouldnt be able to authenticate with wrong email', async () => {
-    usersRepository.items.push({
-      id: 'id-01',
+    await usersRepository.create({
       name: 'Marcelo Yuzo',
       email: 'marceloyuzo@hotmail.com',
       password_hashed: await hash('123456', 6),
-      created_at: new Date(),
     })
 
     expect(async () => {
