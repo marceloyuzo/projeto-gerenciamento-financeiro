@@ -3,13 +3,13 @@ import { z } from 'zod'
 import { makeRegisterUseCase } from '../../../use-cases/factories/make-register-use-case'
 
 export async function register(req: FastifyRequest, res: FastifyReply) {
-  const RequestSchema = z.object({
+  const registerSchema = z.object({
     name: z.string(),
     email: z.string().email(),
     password: z.string(),
   })
 
-  const { email, name, password } = RequestSchema.parse(req.body)
+  const { email, name, password } = registerSchema.parse(req.body)
 
   try {
     const registerUseCase = makeRegisterUseCase()
