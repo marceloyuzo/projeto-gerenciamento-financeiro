@@ -43,6 +43,8 @@ describe('Get User Metrics Monthly Use Case', () => {
       date: new Date(),
     })
 
+    vi.setSystemTime(new Date(2023, 9, 22, 0, 0, 0))
+
     await operationsRepository.create({
       id: 'operation-03',
       name: 'Operation 3',
@@ -66,10 +68,11 @@ describe('Get User Metrics Monthly Use Case', () => {
     const { metrics } = await sut.execute({
       userId: 'user-01',
       month: 10,
+      year: 2024,
     })
 
-    expect(metrics.balance).toEqual(480)
-    expect(metrics.income).toEqual(1420)
-    expect(metrics.outcome).toEqual(940)
+    expect(metrics.balance).toEqual(-420)
+    expect(metrics.income).toEqual(0)
+    expect(metrics.outcome).toEqual(420)
   })
 })

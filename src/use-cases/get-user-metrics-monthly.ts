@@ -9,6 +9,7 @@ interface MetricsParams {
 interface GetUserMetricsMonthlyRequest {
   userId: string
   month: number
+  year: number
 }
 
 interface GetUserMetricsMonthlyResponse {
@@ -21,11 +22,17 @@ export class GetUserMetricMonthlysUseCase {
   async execute({
     userId,
     month,
+    year,
   }: GetUserMetricsMonthlyRequest): Promise<GetUserMetricsMonthlyResponse> {
-    const operations = this.operationsRepository.findManyByUserIdMonthly(
-      userId,
-      month,
-    )
+    const beginPeriod = new Date(year, month - 1, 1, 0, 0, 0)
+    const endPeriod = new Date(year, month, 0, 0, 0, 0)
+
+    const operations =
+      await this.operationsRepository.findManyByUserIdPeriodically(
+        userId,
+        beginPeriod,
+        endPeriod,
+      )
 
     const metrics = (await operations).reduce(
       (acc, cur) => {

@@ -6,12 +6,10 @@ export interface OperationsRepository {
   edit(operation: Operation): Promise<Operation>
   findById(operationId: string): Promise<Operation | null>
   findManyByUserId(userId: string, page: number): Promise<Operation[]>
-  findManyByUserIdMonthly(userId: string, month: number): Promise<Operation[]>
-  findManyByUserIdYearly(userId: string, year: number): Promise<Operation[]>
   findManyByUserIdPeriodically(
     userId: string,
     beginPeriod: Date,
     endPeriod: Date,
-    page: number,
+    page?: number,
   ): Promise<Operation[]>
 }

@@ -83,31 +83,30 @@ export class InMemoryOperationsRepository implements OperationsRepository {
     return operations
   }
 
-  async findManyByUserIdMonthly(userId: string, month: number) {
-    const operations = this.items.filter(
-      (item) =>
-        item.user_id === userId && dayjs(item.date).month() === month - 1,
-    )
-
-    return operations
-  }
-
-  async findManyByUserIdYearly(userId: string, year: number) {
-    const operations = this.items.filter(
-      (item) => item.user_id === userId && dayjs(item.date).year() === year,
-    )
-
-    return operations
-  }
-
   async findManyByUserIdPeriodically(
     userId: string,
     beginPeriod: Date,
     endPeriod: Date,
-    page: number,
+    page?: number,
   ) {
-    const operations = this.items
-      .filter((item) => {
+    let operations = []
+
+    if (page) {
+      operations = this.items
+        .filter((item) => {
+          const operationDate = dayjs(item.date)
+          const beginDate = dayjs(beginPeriod)
+          const endDate = dayjs(endPeriod)
+
+          return (
+            item.user_id === userId &&
+            operationDate.isAfter(beginDate) &&
+            operationDate.isBefore(endDate)
+          )
+        })
+        .slice((page - 1) * 20, page * 20)
+    } else {
+      operations = this.items.filter((item) => {
         const operationDate = dayjs(item.date)
         const beginDate = dayjs(beginPeriod)
         const endDate = dayjs(endPeriod)
@@ -118,7 +117,7 @@ export class InMemoryOperationsRepository implements OperationsRepository {
           operationDate.isBefore(endDate)
         )
       })
-      .slice((page - 1) * 20, page * 20)
+    }
 
     return operations
   }

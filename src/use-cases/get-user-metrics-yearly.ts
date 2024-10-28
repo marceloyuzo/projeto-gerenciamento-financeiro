@@ -22,9 +22,13 @@ export class GetUserMetricYearlysUseCase {
     userId,
     year,
   }: GetUserMetricsYearlyRequest): Promise<GetUserMetricsYearlyResponse> {
-    const operations = this.operationsRepository.findManyByUserIdYearly(
+    const beginPeriod = new Date(year, 0, 1)
+    const endPeriod = new Date(year, 11, 31)
+
+    const operations = this.operationsRepository.findManyByUserIdPeriodically(
       userId,
-      year,
+      beginPeriod,
+      endPeriod,
     )
 
     const metrics = (await operations).reduce(
