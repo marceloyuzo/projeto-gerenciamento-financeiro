@@ -34,7 +34,7 @@ export class GetUserMetricMonthlysUseCase {
         endPeriod,
       )
 
-    const metrics = (await operations).reduce(
+    const metrics = operations.reduce(
       (acc, cur) => {
         if (cur.type === 'Deposit') {
           acc.income += cur.price

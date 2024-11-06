@@ -19,7 +19,7 @@ export async function registerOperation(
     ]),
     price: z.coerce.number(),
     type: z.enum(['Deposit', 'Credit', 'Debit']),
-    date: z.date().default(new Date()),
+    date: z.coerce.date().default(new Date()),
   })
 
   const { name, category, price, type, date } = registerOperationSchema.parse(
